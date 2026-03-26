@@ -25,7 +25,7 @@ const HomeView = ({ navigate, addToCart }) => {
         
         <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col items-center text-center mt-20">
           <Reveal delay={100}>
-            <div className="inline-block border border-[#D4AF37]/50 bg-[#D4AF37]/10 backdrop-blur-md text-[#D4AF37] text-[10px] font-black uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="inline-block border border-gold-metallic/50 bg-gold-metallic/10 backdrop-blur-md text-gold-metallic text-[10px] font-black uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 shadow-[0_0_20px_rgba(255,214,78,0.2)]">
               Exclusive Printed Collection 2026
             </div>
           </Reveal>
@@ -33,7 +33,7 @@ const HomeView = ({ navigate, addToCart }) => {
           <Reveal delay={300}>
             <h1 className="text-5xl md:text-[6rem] lg:text-[8rem] font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 drop-shadow-2xl">
               Prints That <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#D4AF37] to-yellow-700 filter drop-shadow-[0_0_30px_rgba(212,175,55,0.4)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFF5D1] via-[#d4af37] to-[#6B5120] filter drop-shadow-[0_0_30px_rgba(255,214,78,0.5)]">
                 Speak.
               </span>
             </h1>
@@ -49,7 +49,7 @@ const HomeView = ({ navigate, addToCart }) => {
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
               <button 
                 onClick={() => navigate('shop')}
-                className="group relative px-10 py-5 bg-[#D4AF37] text-[#0F0F0F] font-black uppercase tracking-[0.2em] text-xs transition-all duration-300 rounded-sm hover:shadow-[0_0_40px_rgba(212,175,55,0.6)] hover:-translate-y-1 active:scale-95 overflow-hidden flex items-center justify-center"
+                className="group relative px-10 py-5 bg-gold-metallic text-[#0F0F0F] font-black uppercase tracking-[0.2em] text-xs transition-all duration-300 rounded-sm hover:shadow-[0_0_40px_rgba(255,214,78,0.6)] hover:-translate-y-1 active:scale-95 overflow-hidden flex items-center justify-center"
               >
                 <span className="relative z-10 flex items-center">Shop New Drops <ArrowRight size={16} className="ml-2 group-hover:translate-x-2 transition-transform" /></span>
                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
@@ -59,13 +59,13 @@ const HomeView = ({ navigate, addToCart }) => {
         </div>
 
         {/* Floating background elements */}
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-[#D4AF37]/10 rounded-full blur-[100px] animate-pulse-slow z-0" />
+        <div className="absolute top-1/4 left-10 w-64 h-64 bg-gold-metallic/10 rounded-full blur-[100px] animate-pulse-slow z-0" />
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow z-0" style={{ animationDelay: '2s' }} />
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-70">
-          <span className="text-[#D4AF37] text-[9px] uppercase tracking-[0.3em] mb-2 font-black">Scroll</span>
-          <div className="w-[2px] h-12 bg-gradient-to-b from-[#D4AF37] to-transparent" />
+          <span className="text-gold-metallic text-[9px] uppercase tracking-[0.3em] mb-2 font-black">Scroll</span>
+          <div className="w-[2px] h-12 bg-gradient-to-b from-[#d4af37] to-transparent" />
         </div>
       </section>
 
@@ -74,7 +74,7 @@ const HomeView = ({ navigate, addToCart }) => {
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <Reveal>
              <div className="text-center mb-16">
-               <span className="text-[#D4AF37] text-xs font-black uppercase tracking-[0.2em] mb-4 block">Shop By Aesthetic</span>
+               <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] mb-4 block">Shop By Aesthetic</span>
                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-none">Curated Prints</h2>
              </div>
           </Reveal>
@@ -89,12 +89,12 @@ const HomeView = ({ navigate, addToCart }) => {
               <Reveal key={i} delay={i * 150} direction="up">
                 <div 
                   onClick={() => navigate('shop')}
-                  className="group relative aspect-[3/4] overflow-hidden cursor-pointer rounded-lg border border-white/5 hover:border-[#D4AF37]/50 transition-colors duration-500"
+                  className="group relative aspect-[3/4] overflow-hidden cursor-pointer rounded-lg border border-white/5 hover:border-gold-metallic/50 transition-colors duration-500"
                 >
                   <img src={cat.img} className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" alt={cat.name} />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-[#0F0F0F]/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
                   <div className="absolute inset-0 p-8 flex flex-col justify-end items-center text-center z-10">
-                    <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter translate-y-6 group-hover:translate-y-0 group-hover:text-[#D4AF37] transition-all duration-500">
+                    <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter translate-y-6 group-hover:translate-y-0 group-hover:text-gold-metallic transition-all duration-500">
                       {cat.name}
                     </h3>
                     <p className="text-white/60 text-xs font-medium uppercase tracking-widest mt-3 opacity-0 group-hover:opacity-100 translate-y-6 group-hover:translate-y-0 transition-all duration-500 delay-100">
@@ -113,17 +113,17 @@ const HomeView = ({ navigate, addToCart }) => {
 
       {/* 🚀 NEW DROPS (Grid) */}
       <section className="py-32 bg-[#0A0A0A] border-y border-white/5 relative">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-metallic/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
           <Reveal>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
               <div>
-                <span className="text-[#D4AF37] text-xs font-black uppercase tracking-[0.2em] mb-4 block flex items-center"><div className="w-2 h-2 bg-[#D4AF37] rounded-full animate-ping mr-3"/> Just Dropped</span>
+                <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] mb-4 block flex items-center"><div className="w-2 h-2 bg-gold-metallic rounded-full animate-ping mr-3"/> Just Dropped</span>
                 <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">Fresh Prints</h2>
               </div>
               <button 
                 onClick={() => navigate('shop')}
-                className="hidden md:flex items-center text-white/50 hover:text-[#D4AF37] font-bold uppercase tracking-[0.15em] text-xs transition-colors group"
+                className="hidden md:flex items-center text-white/50 hover:text-gold-metallic font-bold uppercase tracking-[0.15em] text-xs transition-colors group"
               >
                 View All Drops <ArrowRight size={16} className="ml-2 group-hover:translate-x-2 transition-transform" />
               </button>
@@ -154,20 +154,20 @@ const HomeView = ({ navigate, addToCart }) => {
             className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-[10s] ease-linear"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-[#0F0F0F]" />
-          <div className="absolute inset-0 bg-[#D4AF37]/5 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gold-metallic/5 mix-blend-overlay" />
         </div>
         
         <Reveal>
           <div className="relative z-10 flex flex-col items-center text-center px-6">
-            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full border border-white/20 backdrop-blur-md flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] group-hover:scale-110 transition-all duration-500 mb-8 cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_40px_rgba(212,175,55,0.5)]">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full border border-white/20 backdrop-blur-md flex items-center justify-center group-hover:bg-gold-metallic group-hover:border-gold-metallic group-hover:scale-110 transition-all duration-500 mb-8 cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_40px_rgba(255,214,78,0.5)]">
               <Play size={32} className="text-white group-hover:text-[#0F0F0F] translate-x-1 transition-colors" fill="currentColor" />
             </div>
             <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6 drop-shadow-2xl">
-              The Underground <br/><span className="text-[#D4AF37]">Print Series</span>
+              The Underground <br/><span className="text-gold-metallic">Print Series</span>
             </h2>
             <button 
               onClick={() => navigate('shop')}
-              className="text-white font-black uppercase tracking-[0.3em] text-xs border-b-2 border-[#D4AF37] pb-2 hover:text-[#D4AF37] hover:tracking-[0.4em] transition-all duration-300"
+              className="text-white font-black uppercase tracking-[0.3em] text-xs border-b-2 border-gold-metallic pb-2 hover:text-gold-metallic hover:tracking-[0.4em] transition-all duration-300"
             >
               Shop The Lookbook
             </button>
@@ -210,13 +210,13 @@ const HomeView = ({ navigate, addToCart }) => {
                 <div className="aspect-square bg-[#111] rounded-lg overflow-hidden border border-white/10 relative z-10">
                   <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1000&q=80" alt="Quality" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
                 </div>
-                <div className="absolute -bottom-10 -right-10 w-full h-full border-2 border-[#D4AF37] rounded-lg -z-10 group-hover:-bottom-6 group-hover:-right-6 transition-all duration-500" />
+                <div className="absolute -bottom-10 -right-10 w-full h-full border-2 border-gold-metallic rounded-lg -z-10 group-hover:-bottom-6 group-hover:-right-6 transition-all duration-500" />
               </div>
             </Reveal>
             
             <div className="space-y-10">
               <Reveal delay={100}>
-                <span className="text-[#D4AF37] text-xs font-black uppercase tracking-[0.2em]">Why Relberry?</span>
+                <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em]">Why Relberry?</span>
                 <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-[0.9] mt-4">
                   Prints That <br/> Outlast Trends.
                 </h2>
@@ -229,7 +229,7 @@ const HomeView = ({ navigate, addToCart }) => {
                   { title: "Pre-Shrunk & Bio-Washed", desc: "Ready to wear out the box. No shrinking, zero fading." }
                 ].map((item, i) => (
                   <Reveal key={i} delay={200 + (i * 100)}>
-                    <div className="border-l-2 border-[#D4AF37] pl-6">
+                    <div className="border-l-2 border-gold-metallic pl-6">
                       <h3 className="text-white font-black uppercase tracking-wide text-lg mb-2">{item.title}</h3>
                       <p className="text-white/60 text-sm font-medium leading-relaxed">{item.desc}</p>
                     </div>
@@ -247,7 +247,7 @@ const HomeView = ({ navigate, addToCart }) => {
           <Reveal>
             <div className="text-center mb-20">
               <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none mb-4">Customer Vibes</h2>
-              <p className="text-[#D4AF37] font-bold uppercase tracking-widest text-xs">Rated 4.9/5 by 10,000+ hypebeasts</p>
+              <p className="text-gold-metallic font-bold uppercase tracking-widest text-xs">Rated 4.9/5 by 10,000+ hypebeasts</p>
             </div>
           </Reveal>
 
@@ -258,8 +258,8 @@ const HomeView = ({ navigate, addToCart }) => {
               { name: "Aman K.", text: "Washed my Acid Wash tee like 10 times, print hasn't faded a bit. Insane durability.", rating: 5 }
             ].map((review, i) => (
               <Reveal key={i} delay={i * 150}>
-                <div className="bg-[#111] border border-white/5 p-8 rounded-lg hover:border-[#D4AF37]/30 transition-colors duration-300">
-                  <div className="flex text-[#D4AF37] mb-6">
+                <div className="bg-[#111] border border-white/5 p-8 rounded-lg hover:border-gold-metallic/30 transition-colors duration-300">
+                  <div className="flex text-gold-metallic mb-6">
                     {[...Array(review.rating)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
                   </div>
                   <p className="text-white/80 text-base leading-relaxed mb-8 italic font-medium">"{review.text}"</p>
@@ -274,10 +274,10 @@ const HomeView = ({ navigate, addToCart }) => {
 
       {/* 📩 NEWSLETTER */}
       <section className="py-32 bg-[#0A0A0A] relative overflow-hidden text-center border-t border-white/5">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-[#D4AF37]/10 rounded-full blur-[120px] -z-10 animate-pulse-slow" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-gold-metallic/10 rounded-full blur-[120px] -z-10 animate-pulse-slow" />
         <Reveal>
           <div className="max-w-2xl mx-auto px-6 relative z-10">
-            <Mail size={48} className="mx-auto text-[#D4AF37] mb-8 stroke-1" />
+            <Mail size={48} className="mx-auto text-gold-metallic mb-8 stroke-1" />
             <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6">
               Join the Fam
             </h2>
@@ -288,9 +288,9 @@ const HomeView = ({ navigate, addToCart }) => {
               <input 
                 type="email" 
                 placeholder="ENTER YOUR EMAIL" 
-                className="flex-grow bg-[#111] border border-white/10 text-white px-6 py-4 rounded-sm outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all text-xs font-bold tracking-widest uppercase placeholder-white/30 text-center sm:text-left"
+                className="flex-grow bg-[#111] border border-white/10 text-white px-6 py-4 rounded-sm outline-none focus:border-gold-metallic focus:ring-1 focus:ring-[#d4af37] transition-all text-xs font-bold tracking-widest uppercase placeholder-white/30 text-center sm:text-left"
               />
-              <button className="bg-[#D4AF37] text-[#0F0F0F] px-10 py-4 font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all duration-300 rounded-sm hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] active:scale-95 sm:w-auto w-full">
+              <button className="bg-gold-metallic text-[#0F0F0F] px-10 py-4 font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all duration-300 rounded-sm hover:shadow-[0_0_20px_rgba(255,214,78,0.4)] active:scale-95 sm:w-auto w-full">
                 Subscribe
               </button>
             </div>

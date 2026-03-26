@@ -76,7 +76,7 @@ export default function App() {
   const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="font-sans text-zinc-50 bg-[#0F0F0F] min-h-screen flex flex-col selection:bg-[#D4AF37] selection:text-[#0F0F0F] antialiased scroll-smooth">
+    <div className="font-sans text-zinc-50 bg-[#0F0F0F] min-h-screen flex flex-col selection:bg-gold-metallic selection:text-[#0F0F0F] antialiased scroll-smooth">
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; overflow-x: hidden; }
