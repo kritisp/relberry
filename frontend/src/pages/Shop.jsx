@@ -30,10 +30,10 @@ const ShopView = ({ navigate, addToCart }) => {
             <div className="sticky top-32 space-y-12">
               <Reveal delay={100} direction="right">
                 <div>
-                  <h3 className="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 border-l-2 border-[#39FF14] pl-3">Aesthetic</h3>
+                  <h3 className="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 border-l-2 border-[#D4AF37] pl-3">Aesthetic</h3>
                   <ul className="space-y-4">
                     {['All Prints', 'Graphic Tees', 'Anime Art', 'Typography', 'Street Art'].map((cat, i) => (
-                      <li key={cat} className={`text-sm font-bold uppercase tracking-wider cursor-pointer transition-colors hover:translate-x-2 duration-300 ${i === 0 ? 'text-[#39FF14]' : 'text-white/50 hover:text-white'}`}>
+                      <li key={cat} className={`text-sm font-bold uppercase tracking-wider cursor-pointer transition-colors hover:translate-x-2 duration-300 ${i === 0 ? 'text-[#D4AF37]' : 'text-white/50 hover:text-white'}`}>
                         {cat}
                       </li>
                     ))}
@@ -42,10 +42,10 @@ const ShopView = ({ navigate, addToCart }) => {
               </Reveal>
               <Reveal delay={200} direction="right">
                 <div>
-                  <h3 className="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 border-l-2 border-[#39FF14] pl-3">Size</h3>
+                  <h3 className="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 border-l-2 border-[#D4AF37] pl-3">Size</h3>
                   <div className="grid grid-cols-3 gap-2">
                     {['S', 'M', 'L', 'XL', 'XXL'].map(size => (
-                      <button key={size} className="border border-white/5 bg-[#111] text-white/50 py-3 text-xs font-bold hover:border-[#39FF14] hover:text-[#39FF14] hover:bg-[#39FF14]/5 transition-all duration-300 rounded-sm active:scale-95">
+                      <button key={size} className="border border-white/5 bg-[#111] text-white/50 py-3 text-xs font-bold hover:border-[#D4AF37] hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all duration-300 rounded-sm active:scale-95">
                         {size}
                       </button>
                     ))}

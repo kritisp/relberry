@@ -7,7 +7,7 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
   return (
     <div className="group flex flex-col cursor-pointer bg-transparent rounded-lg overflow-hidden transition-all duration-500 hover:-translate-y-2">
       <div 
-        className="relative aspect-[3/4] overflow-hidden bg-[#111] rounded-lg border border-white/5 group-hover:border-[#39FF14]/30 group-hover:shadow-[0_10px_40px_rgba(57,255,20,0.1)] transition-all duration-500"
+        className="relative aspect-[3/4] overflow-hidden bg-[#111] rounded-lg border border-white/5 group-hover:border-[#D4AF37]/30 group-hover:shadow-[0_10px_40px_rgba(212,175,55,0.1)] transition-all duration-500"
         onClick={() => navigate('product', { id: product.id })}
       >
         <img 
@@ -24,7 +24,7 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
             </div>
           )}
           {discount > 0 && (
-            <div className="bg-[#39FF14] text-[#0F0F0F] text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm shadow-[0_0_15px_rgba(57,255,20,0.4)] w-max animate-pulse-slow">
+            <div className="bg-[#D4AF37] text-[#0F0F0F] text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.4)] w-max animate-pulse-slow">
               {discount}% OFF
             </div>
           )}
@@ -34,7 +34,7 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-[120%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-20">
           <button 
             onClick={(e) => { e.stopPropagation(); onQuickAdd(product); }}
-            className="w-full bg-[#39FF14] text-[#0F0F0F] py-3.5 font-black uppercase tracking-wider text-xs rounded-sm hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-300 flex items-center justify-center gap-2 active:scale-95"
+            className="w-full bg-[#D4AF37] text-[#0F0F0F] py-3.5 font-black uppercase tracking-wider text-xs rounded-sm hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-300 flex items-center justify-center gap-2 active:scale-95"
           >
             <ShoppingCart size={14} /> Quick Add
           </button>
@@ -45,7 +45,7 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
       </div>
       
       <div className="pt-5 flex flex-col bg-transparent z-20 relative">
-        <p className="text-[#39FF14] text-[10px] font-black uppercase tracking-[0.2em] mb-2">{product.category}</p>
+        <p className="text-[#D4AF37] text-[10px] font-black uppercase tracking-[0.2em] mb-2">{product.category}</p>
         <h3 className="text-white font-bold text-sm md:text-base uppercase tracking-wide leading-snug group-hover:text-white transition-colors line-clamp-1 mb-2">
           {product.name}
         </h3>

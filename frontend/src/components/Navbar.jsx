@@ -27,7 +27,7 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
           <div className="flex items-center lg:hidden w-1/4">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white hover:text-[#39FF14] hover:scale-110 active:scale-90 transition-all"
+              className="text-white hover:text-[#D4AF37] hover:scale-110 active:scale-90 transition-all"
             >
               {isMobileMenuOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
             </button>
@@ -39,7 +39,7 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
             onClick={() => navigate('home')}
           >
             <h1 className="text-2xl md:text-3xl font-black tracking-[0.15em] text-white uppercase leading-none group-hover:scale-105 transition-transform duration-500">
-              Rel<span className="text-[#39FF14] drop-shadow-[0_0_10px_rgba(57,255,20,0.5)]">berry</span>
+              Rel<span className="text-[#D4AF37] drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]">berry</span>
             </h1>
           </div>
 
@@ -55,7 +55,7 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
                 `}
               >
                 {link.name}
-                <span className={`absolute bottom-0 left-0 h-[2px] bg-[#39FF14] transition-all duration-300 ease-out
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-[#D4AF37] transition-all duration-300 ease-out
                   ${currentView === link.view && link.name === 'All Prints' ? 'w-full' : 'w-0 group-hover:w-full'}
                 `} />
               </button>
@@ -64,8 +64,8 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
 
           {/* Icons & Search */}
           <div className="flex items-center justify-end w-1/4 space-x-5 md:space-x-8">
-            <div className={`hidden md:flex items-center bg-[#1A1A1A]/80 border border-white/10 rounded-full px-4 py-2 transition-all duration-500 focus-within:border-[#39FF14] focus-within:shadow-[0_0_15px_rgba(57,255,20,0.2)] ${searchOpen ? 'w-64 bg-[#0F0F0F]' : 'w-48 hover:bg-[#222]'}`}>
-              <Search size={16} className="text-[#39FF14]" />
+            <div className={`hidden md:flex items-center bg-[#1A1A1A]/80 border border-white/10 rounded-full px-4 py-2 transition-all duration-500 focus-within:border-[#D4AF37] focus-within:shadow-[0_0_15px_rgba(212,175,55,0.2)] ${searchOpen ? 'w-64 bg-[#0F0F0F]' : 'w-48 hover:bg-[#222]'}`}>
+              <Search size={16} className="text-[#D4AF37]" />
               <input 
                 type="text" 
                 placeholder="Search prints..." 
@@ -75,19 +75,19 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
               />
             </div>
             
-            <button className="text-white hover:text-[#39FF14] md:hidden transition-colors hover:scale-110 active:scale-95 duration-200">
+            <button className="text-white hover:text-[#D4AF37] md:hidden transition-colors hover:scale-110 active:scale-95 duration-200">
               <Search size={22} strokeWidth={1.5} />
             </button>
-            <button className="text-white hover:text-[#39FF14] hidden sm:block transition-colors hover:scale-110 active:scale-95 duration-200">
+            <button className="text-white hover:text-[#D4AF37] hidden sm:block transition-colors hover:scale-110 active:scale-95 duration-200">
               <User size={22} strokeWidth={1.5} />
             </button>
             <button 
               onClick={() => navigate('cart')}
-              className="text-white hover:text-[#39FF14] relative transition-all duration-300 hover:scale-110 active:scale-95 group"
+              className="text-white hover:text-[#D4AF37] relative transition-all duration-300 hover:scale-110 active:scale-95 group"
             >
               <ShoppingCart size={22} strokeWidth={1.5} />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#39FF14] text-[#0F0F0F] text-[10px] font-black rounded-full h-[18px] w-[18px] flex items-center justify-center shadow-[0_0_15px_rgba(57,255,20,0.6)] animate-pulse-fast">
+                <span className="absolute -top-2 -right-2 bg-[#D4AF37] text-[#0F0F0F] text-[10px] font-black rounded-full h-[18px] w-[18px] flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.6)] animate-pulse-fast">
                   {cartCount}
                 </span>
               )}
@@ -103,7 +103,7 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
             <button
               key={link.name}
               onClick={() => { navigate(link.view); setIsMobileMenuOpen(false); }}
-              className={`text-left text-4xl font-black uppercase tracking-tighter text-white hover:text-[#39FF14] transition-all duration-500 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
+              className={`text-left text-4xl font-black uppercase tracking-tighter text-white hover:text-[#D4AF37] transition-all duration-500 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
               style={{ transitionDelay: `${100 + idx * 100}ms` }}
             >
               {link.name}
