@@ -1,0 +1,10 @@
+export const PRODUCTS = [
+  { id: 1, name: "Neon Matrix Oversized Tee", price: 1299, originalPrice: 2824, category: "Oversized", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80", tag: "Bestseller", desc: "Heavyweight 240 GSM cotton. Drop shoulder fit with high-density neon puff print." },
+  { id: 2, name: "Acid Wash Grunge Shirt", price: 1499, originalPrice: 3258, category: "Acid Wash", image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80", tag: "New Drop", desc: "Vintage washed denim shirt with distressed edges and relaxed collar." },
+  { id: 3, name: "Tokyo Drift Graphic Tee", price: 999, originalPrice: 2171, category: "Graphic Tees", image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=80", desc: "Classic streetwear graphic tee featuring neo-Tokyo inspired artwork." },
+  { id: 4, name: "Utility Cargo Overshirt", price: 1899, originalPrice: 4128, category: "Cargos", image: "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=800&q=80", tag: "Trending", desc: "Constructed with durable ripstop fabric. Features 3D cargo pockets and a boxy fit." },
+  { id: 5, name: "Minimalist Drop Shoulder", price: 899, originalPrice: 1954, category: "Plus Size", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80", desc: "The essential blank tee. 100% combed cotton, ultra-soft feel." },
+  { id: 6, name: "Checkered Flannel Heavy", price: 1699, originalPrice: 3693, category: "Shirts", image: "https://images.unsplash.com/photo-1588629511599-5636072efd02?w=800&q=80", desc: "Thick woven flannel for layering. Oversized silhouette." },
+  { id: 7, name: "Cyberpunk Tech Tee", price: 1199, originalPrice: 2606, category: "T-Shirts", image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&q=80", tag: "Limited", desc: "Moisture-wicking tech fabric with reflective 3M branding." },
+  { id: 8, name: "Vintage Bowling Shirt", price: 1399, originalPrice: 3041, category: "Shirts", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&q=80", desc: "Relaxed cuban collar shirt with retro contrasting panels." }
+];
