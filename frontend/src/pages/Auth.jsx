@@ -88,19 +88,19 @@ const AuthView = ({ onLogin }) => {
 
         {/* Mobile logo */}
         <div className="absolute top-8 left-0 right-0 flex justify-center lg:hidden pointer-events-none z-10">
-          <img src="/logo.png" alt="Relberry" className="h-16 object-contain drop-shadow-[0_0_20px_rgba(255,215,0,0.6)]" />
+          <img src="/logo.png" alt="Relberry" className="h-[120px] object-contain drop-shadow-[0_0_20px_rgba(255,215,0,0.6)] mt-4" />
         </div>
 
-        <div className="w-full max-w-[400px] relative mt-16 lg:mt-0">
+        <div className="w-full max-w-[400px] relative mt-24 lg:mt-0">
 
-          {/* Glass card wraps form on mobile only */}
-          <div className="bg-[#0A0A0A]/80 backdrop-blur-xl lg:bg-transparent lg:backdrop-blur-none rounded-2xl lg:rounded-none border border-white/10 lg:border-0 p-6 lg:p-0">
+          {/* Glass card wraps form on mobile only - Made highly translucent so the scrolling background is visible */}
+          <div className="bg-[#0A0A0A]/40 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none rounded-2xl lg:rounded-none border border-white/10 lg:border-0 p-6 lg:p-0">
 
             <Reveal direction="up" delay={100}>
 
-              <div className="mb-8 text-center lg:text-left">
+              <div className="mb-8 text-center">
                 <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight mb-2">
-                  {mode === 'login' ? 'Welcome Back' : 'Join The Culture'}
+                  {mode === 'login' ? 'Welcome' : 'Join The Culture'}
                 </h2>
                 <p className="text-white/50 text-xs sm:text-sm font-medium tracking-wide">
                   {mode === 'login' ? 'Enter your credentials to access the drop.' : 'Create an account to unlock exclusive prints.'}
