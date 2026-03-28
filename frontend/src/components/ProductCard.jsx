@@ -1,8 +1,9 @@
 import React from 'react';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Heart } from 'lucide-react';
 
-const ProductCard = ({ product, navigate, onQuickAdd }) => {
+const ProductCard = ({ product, navigate, onQuickAdd, wishlist, toggleWishlist }) => {
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+  const isWishlisted = wishlist?.some(item => item.id === product.id) || false;
 
   return (
     <div className="group flex flex-col cursor-pointer bg-transparent rounded-lg overflow-hidden transition-all duration-500 hover:-translate-y-2">
@@ -30,6 +31,20 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
           )}
         </div>
 
+        {/* Wishlist Heart Icon */}
+        <button 
+          onClick={(e) => { e.stopPropagation(); toggleWishlist && toggleWishlist(product); }}
+          className={`absolute top-4 right-4 z-30 p-2.5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center
+            ${isWishlisted ? 'bg-gold-metallic/20 border-gold-metallic shadow-[0_0_15px_rgba(255,214,78,0.4)]' : 'bg-[#111]/80 border-white/10 hover:border-gold-metallic'}
+          `}
+        >
+          <Heart 
+            size={16} 
+            strokeWidth={isWishlisted ? 0 : 2}
+            className={`transition-colors duration-300 ${isWishlisted ? 'fill-gold-metallic text-gold-metallic' : 'text-white/70 group-hover:text-gold-metallic'}`} 
+          />
+        </button>
+
         {/* Quick Add Overlay */}
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-[120%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-20">
           <button 
@@ -44,7 +59,7 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none" />
       </div>
       
-      <div className="pt-5 flex flex-col bg-transparent z-20 relative">
+      <div className="pt-5 flex flex-col bg-transparent z-20 relative px-2">
         <p className="text-gold-metallic text-[10px] font-black uppercase tracking-[0.2em] mb-2">{product.category}</p>
         <h3 className="text-white font-bold text-sm md:text-base uppercase tracking-wide leading-snug group-hover:text-white transition-colors line-clamp-1 mb-2">
           {product.name}

@@ -4,26 +4,54 @@ import Reveal from '../components/Reveal';
 import ProductCard from '../components/ProductCard';
 import { PRODUCTS } from '../data/products';
 
-const HomeView = ({ navigate, addToCart }) => {
+const HomeView = ({ navigate, addToCart, wishlist, toggleWishlist }) => {
   const trending = PRODUCTS.filter(p => p.tag === 'Bestseller' || p.price > 1400);
   const newDrops = PRODUCTS.filter(p => p.tag === 'New Drop' || p.price <= 1200);
+
+  const BANNER_IMAGES = [
+    "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=800&q=80",
+    "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&q=80",
+    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
+    "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80",
+    "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=80"
+  ];
 
   return (
     <div className="w-full bg-[#0F0F0F] overflow-hidden">
       
-      {/* 🚀 HERO SECTION (Cinematic Upgrade) */}
-      <section className="relative h-screen min-h-[700px] w-full flex flex-col items-center justify-center overflow-hidden">
+      {/* 🚀 INFINITE SCROLLING FASHION BANNER */}
+      <section className="pt-[140px] md:pt-[160px] pb-0 w-full overflow-hidden bg-[#0F0F0F] relative z-20">
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-20 pointer-events-none" />
+        
+        <div className="flex w-max animate-[scrollBanner_35s_linear_infinite] hover:[animation-play-state:paused]">
+          {[...BANNER_IMAGES, ...BANNER_IMAGES].map((img, i) => (
+            <div key={i} className="w-[240px] md:w-[320px] aspect-[4/5] rounded-xl overflow-hidden border border-white/5 flex-shrink-0 relative group cursor-pointer mx-2 md:mx-4 shadow-2xl">
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+              <img 
+                src={img} 
+                alt={`Lookbook ${i}`} 
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              />
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gold-metallic/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🚀 TYPOGRAPHY HERO (Prints That Speak) */}
+      <section className="relative w-full flex flex-col items-center justify-center overflow-hidden pt-8 md:pt-16 pb-32 md:pb-48 min-h-[60vh] border-b border-white/5">
         <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=2000&q=80" 
-            alt="Streetwear Hero" 
-            className="w-full h-full object-cover object-top opacity-50 scale-100 animate-[heroZoom_20s_ease-out_forwards]"
+            alt="Streetwear Hero Background" 
+            className="w-full h-full object-cover object-top opacity-80 scale-100 animate-[heroZoom_30s_ease-out_forwards]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F]/70 via-[#0F0F0F]/40 to-[#0F0F0F] z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F]/80 via-transparent to-[#0F0F0F]/80 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F]/80 via-[#0F0F0F]/40 to-[#0F0F0F] z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F]/70 via-transparent to-[#0F0F0F]/70 z-10" />
         </div>
         
-        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col items-center text-center mt-20">
+        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col items-center text-center">
           <Reveal delay={100}>
             <div className="inline-block border border-gold-metallic/50 bg-gold-metallic/10 backdrop-blur-md text-gold-metallic text-[10px] font-black uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 shadow-[0_0_20px_rgba(255,214,78,0.2)]">
               Exclusive Printed Collection 2026
@@ -33,7 +61,7 @@ const HomeView = ({ navigate, addToCart }) => {
           <Reveal delay={300}>
             <h1 className="text-5xl md:text-[6rem] lg:text-[8rem] font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 drop-shadow-2xl">
               Prints That <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFF5D1] via-[#d4af37] to-[#6B5120] filter drop-shadow-[0_0_30px_rgba(255,214,78,0.5)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFF5D1] via-[#d4af37] to-[#6B5120] filter drop-shadow-[0_0_30px_rgba(255,214,78,0.4)]">
                 Speak.
               </span>
             </h1>
@@ -58,25 +86,18 @@ const HomeView = ({ navigate, addToCart }) => {
           </Reveal>
         </div>
 
-        {/* Floating background elements */}
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-gold-metallic/10 rounded-full blur-[100px] animate-pulse-slow z-0" />
-        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow z-0" style={{ animationDelay: '2s' }} />
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-70">
-          <span className="text-gold-metallic text-[9px] uppercase tracking-[0.3em] mb-2 font-black">Scroll</span>
-          <div className="w-[2px] h-12 bg-gradient-to-b from-[#d4af37] to-transparent" />
-        </div>
+        <div className="absolute top-1/4 left-10 w-64 h-64 bg-gold-metallic/10 rounded-full blur-[100px] animate-pulse-slow z-0 pointer-events-none" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow z-0 pointer-events-none" style={{ animationDelay: '2s' }} />
       </section>
 
       {/* 🔥 CATEGORIES (PRINTED T-SHIRTS ONLY) */}
       <section className="py-32 bg-[#0F0F0F]">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <Reveal>
-             <div className="text-center mb-16">
-               <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] mb-4 block">Shop By Aesthetic</span>
-               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-none">Curated Prints</h2>
-             </div>
+              <div className="text-center mb-16">
+                 <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] mb-4 block">Shop By Aesthetic</span>
+                 <h2 className="text-6xl md:text-7xl lg:text-[6rem] heading-caveat text-white capitalize leading-none pb-4 drop-shadow-lg gold-hover cursor-pointer">Curated Prints</h2>
+              </div>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -118,8 +139,8 @@ const HomeView = ({ navigate, addToCart }) => {
           <Reveal>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
               <div>
-                <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] mb-4 block flex items-center"><div className="w-2 h-2 bg-gold-metallic rounded-full animate-ping mr-3"/> Just Dropped</span>
-                <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">Fresh Prints</h2>
+                <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] mb-4 flex items-center"><div className="w-2 h-2 bg-gold-metallic rounded-full animate-ping mr-3"/> Just Dropped</span>
+                <h2 className="text-5xl md:text-7xl heading-caveat text-white capitalize leading-none pb-2 drop-shadow-lg gold-hover cursor-pointer">Fresh Prints</h2>
               </div>
               <button 
                 onClick={() => navigate('shop')}
@@ -137,6 +158,8 @@ const HomeView = ({ navigate, addToCart }) => {
                   product={product} 
                   navigate={navigate} 
                   onQuickAdd={(p) => addToCart(p, 'L', 1)} 
+                  wishlist={wishlist}
+                  toggleWishlist={toggleWishlist}
                 />
               </Reveal>
             ))}
@@ -182,7 +205,7 @@ const HomeView = ({ navigate, addToCart }) => {
             <div className="flex justify-between items-end mb-16">
               <div>
                 <span className="text-white/40 text-xs font-black uppercase tracking-[0.2em] mb-4 block">Most Wanted</span>
-                <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">Trending Prints</h2>
+                <h2 className="text-6xl md:text-[5.5rem] heading-caveat text-white capitalize leading-none pb-2 drop-shadow-lg gold-hover cursor-pointer">Trending Prints</h2>
               </div>
             </div>
           </Reveal>
@@ -194,6 +217,8 @@ const HomeView = ({ navigate, addToCart }) => {
                   product={product} 
                   navigate={navigate} 
                   onQuickAdd={(p) => addToCart(p, 'L', 1)} 
+                  wishlist={wishlist}
+                  toggleWishlist={toggleWishlist}
                 />
               </Reveal>
             ))}
@@ -216,8 +241,8 @@ const HomeView = ({ navigate, addToCart }) => {
             
             <div className="space-y-10">
               <Reveal delay={100}>
-                <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em]">Why Relberry?</span>
-                <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-[0.9] mt-4">
+                <span className="text-gold-metallic text-xs font-black uppercase tracking-[0.2em] block mb-2">Why Relberry?</span>
+                <h2 className="text-6xl md:text-[5.5rem] heading-caveat text-white capitalize leading-[0.9] mt-2 mb-4 drop-shadow-lg gold-hover cursor-pointer">
                   Prints That <br/> Outlast Trends.
                 </h2>
               </Reveal>
@@ -246,7 +271,7 @@ const HomeView = ({ navigate, addToCart }) => {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Reveal>
             <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none mb-4">Customer Vibes</h2>
+              <h2 className="text-6xl md:text-[6rem] heading-caveat text-white capitalize leading-none mb-6 drop-shadow-lg gold-hover cursor-pointer">Customer Vibes</h2>
               <p className="text-gold-metallic font-bold uppercase tracking-widest text-xs">Rated 4.9/5 by 10,000+ hypebeasts</p>
             </div>
           </Reveal>
@@ -278,7 +303,7 @@ const HomeView = ({ navigate, addToCart }) => {
         <Reveal>
           <div className="max-w-2xl mx-auto px-6 relative z-10">
             <Mail size={48} className="mx-auto text-gold-metallic mb-8 stroke-1" />
-            <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6">
+            <h2 className="text-6xl md:text-[6rem] heading-caveat text-white capitalize mb-8 drop-shadow-lg gold-hover cursor-pointer">
               Join the Fam
             </h2>
             <p className="text-white/60 mb-12 text-sm md:text-base font-medium">

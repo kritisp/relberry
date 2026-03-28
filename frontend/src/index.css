@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@400;500;600;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -43,4 +43,30 @@ body { font-family: 'Inter', sans-serif; background-color: #050505; }
   to {
     background-position: 200% center;
   }
+}
+
+@keyframes scrollBanner {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.font-caveat {
+  font-family: 'Caveat', cursive;
+}
+
+.heading-caveat {
+  font-family: 'Caveat', cursive;
+  letter-spacing: 0.02em;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.heading-caveat:hover {
+  transform: scale(1.05) rotate(-2deg);
+  text-shadow: 0px 4px 15px rgba(255, 255, 255, 0.4);
+}
+
+.heading-caveat.gold-hover:hover {
+  text-shadow: 0px 4px 15px rgba(212,175,55,0.6);
+  color: #d4af37;
 }

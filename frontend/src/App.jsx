@@ -8,6 +8,8 @@ import ProductDetailView from './pages/ProductDetail';
 import CartView from './pages/Cart';
 import CheckoutView from './pages/Checkout';
 import AuthView from './pages/Auth';
+import AboutView from './pages/About';
+import WishlistView from './pages/Wishlist';
 import { PRODUCTS } from './data/products';
 
 export default function App() {
@@ -17,9 +19,24 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [toastMsg, setToastMsg] = useState('');
 
+  // Wishlist State with localStorage Persistence
+  const [wishlist, setWishlist] = useState(() => {
+    try {
+      const saved = localStorage.getItem('relberry_wishlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // Sync wishlist to localStorage on change
+  useEffect(() => {
+    localStorage.setItem('relberry_wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentView, params]);
+  }, [currentView, params, isAuthenticated]);
 
   const navigate = (view, newParams = {}) => {
     setCurrentView(view);
@@ -46,6 +63,24 @@ export default function App() {
     showToast(`Added ${product.name} to cart`);
   };
 
+  const toggleWishlist = (product) => {
+    setWishlist(prev => {
+      const exists = prev.find(item => item.id === product.id);
+      if (exists) {
+        showToast(`Removed from Wishlist`);
+        return prev.filter(item => item.id !== product.id);
+      } else {
+        showToast(`Added to Wishlist`);
+        return [...prev, product];
+      }
+    });
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCart([]);
+  };
+
   const updateQuantity = (id, size, newQty) => {
     if (newQty < 1) return;
     setCart(prev => prev.map(item =>
@@ -60,18 +95,22 @@ export default function App() {
   const renderView = () => {
     switch (currentView) {
       case 'home':
-        return <HomeView navigate={navigate} addToCart={addToCart} />;
+        return <HomeView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
       case 'shop':
-        return <ShopView navigate={navigate} addToCart={addToCart} />;
+        return <ShopView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
       case 'product':
         const product = PRODUCTS.find(p => p.id === params.id);
         return <ProductDetailView product={product} navigate={navigate} addToCart={addToCart} />;
+      case 'wishlist':
+        return <WishlistView wishlist={wishlist} navigate={navigate} addToCart={addToCart} toggleWishlist={toggleWishlist} />;
+      case 'about':
+        return <AboutView navigate={navigate} />;
       case 'cart':
         return <CartView cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} navigate={navigate} />;
       case 'checkout':
         return <CheckoutView cart={cart} navigate={navigate} />;
       default:
-        return <HomeView navigate={navigate} addToCart={addToCart} />;
+        return <HomeView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
     }
   };
 
@@ -123,7 +162,13 @@ export default function App() {
         }
       `}} />
 
-      <Navbar cartCount={totalCartItems} navigate={navigate} currentView={currentView} />
+      <Navbar 
+        cartCount={totalCartItems} 
+        wishlistCount={wishlist.length} 
+        navigate={navigate} 
+        currentView={currentView} 
+        onLogout={handleLogout} 
+      />
 
       <main className="flex-grow w-full">
         {renderView()}

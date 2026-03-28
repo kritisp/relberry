@@ -1,4 +1,5 @@
 import React from 'react';
+import { Facebook, Instagram } from 'lucide-react';
 
 const Footer = () => (
   <footer className="bg-[#050505] border-t border-white/5 pt-24 pb-12 relative overflow-hidden">
@@ -13,11 +14,12 @@ const Footer = () => (
             Premium printed streetwear for the bold. Designed for the culture, engineered for the streets. Defying the ordinary since inception.
           </p>
           <div className="flex space-x-4">
-            {['Instagram', 'Twitter', 'TikTok', 'YouTube'].map(social => (
-              <button key={social} className="w-10 h-10 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-white/70 hover:bg-gold-metallic hover:text-[#0F0F0F] hover:border-gold-metallic transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(255,214,78,0.2)]">
-                <span className="text-[10px] font-bold uppercase tracking-wider">{social.slice(0,2)}</span>
-              </button>
-            ))}
+            <button aria-label="Facebook" className="w-10 h-10 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-white/70 hover:bg-gold-metallic hover:text-[#0F0F0F] hover:border-gold-metallic transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(255,214,78,0.2)]">
+              <Facebook size={18} strokeWidth={1.5} />
+            </button>
+            <button aria-label="Instagram" className="w-10 h-10 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-white/70 hover:bg-gold-metallic hover:text-[#0F0F0F] hover:border-gold-metallic transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(255,214,78,0.2)]">
+              <Instagram size={18} strokeWidth={1.5} />
+            </button>
           </div>
         </div>
         
@@ -41,7 +43,7 @@ const Footer = () => (
       </div>
       
       <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="text-white/30 text-xs font-medium tracking-wide uppercase">© 2026 Relberry Streetwear. All rights reserved.</p>
+        <p className="text-white/30 text-xs font-medium tracking-wide uppercase">@ 2026 Relberry Fashions. All rights reserved.</p>
         <div className="flex space-x-6 text-white/30 text-xs font-medium uppercase tracking-wider">
           <a href="#" className="hover:text-white transition-colors">Privacy</a>
           <a href="#" className="hover:text-white transition-colors">Terms</a>

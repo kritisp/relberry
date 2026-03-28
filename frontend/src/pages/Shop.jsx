@@ -3,13 +3,13 @@ import { PRODUCTS } from '../data/products';
 import Reveal from '../components/Reveal';
 import ProductCard from '../components/ProductCard';
 
-const ShopView = ({ navigate, addToCart }) => {
+const ShopView = ({ navigate, addToCart, wishlist, toggleWishlist }) => {
   return (
     <div className="w-full bg-[#0F0F0F] min-h-screen pt-32 pb-24">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         <Reveal>
           <div className="mb-16">
-            <h1 className="text-5xl md:text-[6rem] font-black text-white uppercase tracking-tighter mb-8 leading-none drop-shadow-lg">All Prints</h1>
+            <h1 className="text-7xl md:text-[8rem] heading-caveat text-white capitalize mb-8 leading-none drop-shadow-lg gold-hover cursor-pointer pt-6">All Prints</h1>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-8 gap-6">
               <p className="text-white/50 text-xs font-bold uppercase tracking-[0.1em]">{PRODUCTS.length} Styles found</p>
               <div className="flex items-center space-x-4">
@@ -63,6 +63,8 @@ const ShopView = ({ navigate, addToCart }) => {
                     product={product} 
                     navigate={navigate} 
                     onQuickAdd={(p) => addToCart(p, 'L', 1)}
+                    wishlist={wishlist}
+                    toggleWishlist={toggleWishlist}
                   />
                 </Reveal>
               ))}
