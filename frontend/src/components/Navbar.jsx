@@ -23,7 +23,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
   return (
     <nav className={`fixed top-0 z-50 w-full transition-all duration-500 ${scrolled ? 'bg-[#0F0F0F]/80 backdrop-blur-xl border-b border-white/5 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-gradient-to-b from-[#0F0F0F]/80 to-transparent py-6'}`}>
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center relative">
           {/* Mobile Menu Button */}
           <div className="flex items-center lg:hidden flex-1 justify-start">
             <button 
@@ -36,7 +36,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
 
           {/* Logo */}
           <div 
-            className="flex-shrink-0 lg:w-1/4 flex justify-center lg:justify-start cursor-pointer group hover:opacity-90 mx-2"
+            className="absolute left-1/2 -translate-x-1/2 lg:static lg:-translate-x-0 flex-shrink-0 lg:w-1/4 flex justify-center lg:justify-start cursor-pointer group hover:opacity-90"
             onClick={() => navigate('home')}
           >
             <img src="/logo.png" alt="Relberry Logo" className="h-20 md:h-28 lg:h-36 object-contain group-hover:scale-105 transition-all duration-500" style={{ filter: 'drop-shadow(0 0 20px rgba(255,214,78,0.6))' }} />
