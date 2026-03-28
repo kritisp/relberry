@@ -25,7 +25,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center">
           {/* Mobile Menu Button */}
-          <div className="flex items-center lg:hidden w-1/4">
+          <div className="flex items-center lg:hidden flex-1 justify-start">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white hover:text-gold-metallic hover:scale-110 active:scale-90 transition-all"
@@ -36,7 +36,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
 
           {/* Logo */}
           <div 
-            className="w-2/4 lg:w-1/4 flex justify-center lg:justify-start cursor-pointer group hover:opacity-90"
+            className="flex-shrink-0 lg:w-1/4 flex justify-center lg:justify-start cursor-pointer group hover:opacity-90 mx-2"
             onClick={() => navigate('home')}
           >
             <img src="/logo.png" alt="Relberry Logo" className="h-20 md:h-28 lg:h-36 object-contain group-hover:scale-105 transition-all duration-500" style={{ filter: 'drop-shadow(0 0 20px rgba(255,214,78,0.6))' }} />
@@ -62,7 +62,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
           </div>
 
           {/* Icons & Search */}
-          <div className="flex items-center justify-end w-1/4 space-x-5 md:space-x-8">
+          <div className="flex items-center justify-end flex-1 lg:w-1/4 space-x-4 sm:space-x-5 md:space-x-8">
             <div className={`hidden md:flex items-center bg-[#1A1A1A]/80 border border-white/10 rounded-full px-4 py-2 transition-all duration-500 focus-within:border-gold-metallic focus-within:shadow-[0_0_15px_rgba(255,214,78,0.2)] ${searchOpen ? 'w-64 bg-[#0F0F0F]' : 'w-48 hover:bg-[#222]'}`}>
               <Search size={16} className="text-gold-metallic" />
               <input 
