@@ -7,11 +7,13 @@ import ShopView from './pages/Shop';
 import ProductDetailView from './pages/ProductDetail';
 import CartView from './pages/Cart';
 import CheckoutView from './pages/Checkout';
+import AuthView from './pages/Auth';
 import { PRODUCTS } from './data/products';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('home'); 
-  const [params, setParams] = useState({}); 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentView, setCurrentView] = useState('home');
+  const [params, setParams] = useState({});
   const [cart, setCart] = useState([]);
   const [toastMsg, setToastMsg] = useState('');
 
@@ -33,8 +35,8 @@ export default function App() {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id && item.size === size);
       if (existing) {
-        return prev.map(item => 
-          (item.id === product.id && item.size === size) 
+        return prev.map(item =>
+          (item.id === product.id && item.size === size)
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
@@ -46,7 +48,7 @@ export default function App() {
 
   const updateQuantity = (id, size, newQty) => {
     if (newQty < 1) return;
-    setCart(prev => prev.map(item => 
+    setCart(prev => prev.map(item =>
       (item.id === id && item.size === size) ? { ...item, quantity: newQty } : item
     ));
   };
@@ -73,11 +75,18 @@ export default function App() {
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+      <AuthView onLogin={() => setIsAuthenticated(true)} />
+    );
+  }
+
   const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="font-sans text-zinc-50 bg-[#0F0F0F] min-h-screen flex flex-col selection:bg-gold-metallic selection:text-[#0F0F0F] antialiased scroll-smooth">
-      <style dangerouslySetInnerHTML={{__html: `
+    <div className="font-sans text-zinc-50 bg-[#0F0F0F] min-h-screen flex flex-col selection:bg-[#d4af37] selection:text-[#0F0F0F] antialiased scroll-smooth">
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; overflow-x: hidden; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -104,23 +113,24 @@ export default function App() {
           0% { transform: translateX(-50%); }
           100% { transform: translateX(0%); }
         }
-        
-        /* Utility Animation Classes */
-        .animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-pulse-slow { animation: pulseGlow 4s ease-in-out infinite; }
-        .animate-pulse-fast { animation: pulseGlow 1.5s ease-in-out infinite; }
-        .animate-[marquee_15s_linear_infinite] { animation: marquee 15s linear infinite; }
-        .animate-[marquee_15s_linear_infinite_reverse] { animation: marquee_reverse 15s linear infinite; }
+        @keyframes scrollUp {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+        @keyframes scrollDown {
+          0% { transform: translateY(-50%); }
+          100% { transform: translateY(0); }
+        }
       `}} />
 
       <Navbar cartCount={totalCartItems} navigate={navigate} currentView={currentView} />
-      
+
       <main className="flex-grow w-full">
         {renderView()}
       </main>
-      
+
       <Footer />
-      
+
       <Toast message={toastMsg} />
     </div>
   );
