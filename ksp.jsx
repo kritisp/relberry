@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ShoppingCart, Menu, X, Search, User, ChevronRight, 
   Truck, ShieldCheck, RefreshCw, Plus, Minus, 
-  Trash2, ArrowLeft, CheckCircle2, Play, ArrowRight, Mail, Star
+  Trash2, ArrowLeft, CheckCircle2, Play, ArrowRight, Mail, Star, Loader2, LogOut, Heart, Diamond, Layers, Sparkles
 } from 'lucide-react';
 
 // ==========================================
@@ -67,10 +67,11 @@ const Reveal = ({ children, className = "", delay = 0, direction = "up" }) => {
 // ==========================================
 
 // --- components/Navbar.jsx ---
-const Navbar = ({ cartCount, navigate, currentView }) => {
+const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 30);
@@ -79,14 +80,14 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
   }, []);
 
   const navLinks = [
-    { name: 'Graphic Prints', view: 'shop' },
+    { name: 'All Prints', view: 'shop' },
     { name: 'Anime Tees', view: 'shop' },
     { name: 'Typography', view: 'shop' },
-    { name: 'All Prints', view: 'shop' }
+    { name: 'About Us', view: 'about' }
   ];
 
   return (
-    <nav className={`fixed top-0 z-50 w-full transition-all duration-500 ${scrolled ? 'bg-[#0F0F0F]/80 backdrop-blur-xl border-b border-white/5 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-gradient-to-b from-[#0F0F0F]/80 to-transparent py-6'}`}>
+    <nav className={`fixed top-0 z-50 w-full transition-all duration-500 ${scrolled ? 'bg-[#0F0F0F]/90 backdrop-blur-xl border-b border-white/5 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-gradient-to-b from-[#0F0F0F]/90 to-transparent py-6'}`}>
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center">
           {/* Mobile Menu Button */}
@@ -117,12 +118,12 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
                 onClick={() => navigate(link.view)}
                 className={`relative text-xs font-bold uppercase tracking-[0.2em] py-2 transition-colors duration-300
                   text-white/70 hover:text-white group overflow-hidden
-                  ${currentView === link.view && link.name === 'All Prints' ? 'text-white' : ''}
+                  ${currentView === link.view ? 'text-white' : ''}
                 `}
               >
                 {link.name}
                 <span className={`absolute bottom-0 left-0 h-[2px] bg-[#39FF14] transition-all duration-300 ease-out
-                  ${currentView === link.view && link.name === 'All Prints' ? 'w-full' : 'w-0 group-hover:w-full'}
+                  ${currentView === link.view ? 'w-full' : 'w-0 group-hover:w-full'}
                 `} />
               </button>
             ))}
@@ -144,12 +145,50 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
             <button className="text-white hover:text-[#39FF14] md:hidden transition-colors hover:scale-110 active:scale-95 duration-200">
               <Search size={22} strokeWidth={1.5} />
             </button>
-            <button className="text-white hover:text-[#39FF14] hidden sm:block transition-colors hover:scale-110 active:scale-95 duration-200">
-              <User size={22} strokeWidth={1.5} />
+
+            {/* Profile Dropdown */}
+            <div className="relative hidden sm:block">
+              <button 
+                onClick={() => setProfileOpen(!profileOpen)}
+                className={`text-white hover:text-[#39FF14] transition-all duration-200 hover:scale-110 active:scale-95 ${profileOpen ? 'text-[#39FF14]' : ''}`}
+              >
+                <User size={22} strokeWidth={1.5} />
+              </button>
+              
+              {profileOpen && (
+                <div className="absolute right-0 mt-4 w-48 bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.8)] py-2 animate-fade-in-up origin-top-right">
+                  <div className="px-4 py-3 border-b border-white/5 mb-2">
+                    <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Signed in as</p>
+                    <p className="text-white text-xs font-bold truncate mt-1">hypebeast@relberry.com</p>
+                  </div>
+                  <button className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                    My Orders
+                  </button>
+                  <button 
+                    onClick={() => { setProfileOpen(false); onLogout(); }}
+                    className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors flex items-center"
+                  >
+                    <LogOut size={14} className="mr-2" /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <button 
+              onClick={() => navigate('wishlist')}
+              className={`text-white hover:text-[#39FF14] relative transition-all duration-300 hover:scale-110 active:scale-95 group ${currentView === 'wishlist' ? 'text-[#39FF14]' : ''}`}
+            >
+              <Heart size={22} strokeWidth={1.5} className={currentView === 'wishlist' ? 'fill-[#39FF14]' : ''} />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#39FF14] text-[#0F0F0F] text-[10px] font-black rounded-full h-[18px] w-[18px] flex items-center justify-center shadow-[0_0_15px_rgba(57,255,20,0.6)] animate-pulse-fast">
+                  {wishlistCount}
+                </span>
+              )}
             </button>
+
             <button 
               onClick={() => navigate('cart')}
-              className="text-white hover:text-[#39FF14] relative transition-all duration-300 hover:scale-110 active:scale-95 group"
+              className={`text-white hover:text-[#39FF14] relative transition-all duration-300 hover:scale-110 active:scale-95 group ${currentView === 'cart' ? 'text-[#39FF14]' : ''}`}
             >
               <ShoppingCart size={22} strokeWidth={1.5} />
               {cartCount > 0 && (
@@ -163,7 +202,7 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
       </div>
 
       {/* Mobile Menu Full Screen Overlay */}
-      <div className={`fixed inset-0 top-[72px] bg-[#0F0F0F]/95 backdrop-blur-2xl z-40 px-6 py-8 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}>
+      <div className={`fixed inset-0 top-[72px] bg-[#0F0F0F]/95 backdrop-blur-2xl z-40 px-6 py-8 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden flex flex-col justify-between`}>
         <div className="flex flex-col space-y-8 mt-10">
           {navLinks.map((link, idx) => (
             <button
@@ -176,6 +215,12 @@ const Navbar = ({ cartCount, navigate, currentView }) => {
             </button>
           ))}
         </div>
+        <button 
+          onClick={onLogout}
+          className="flex items-center text-red-400 font-bold uppercase tracking-wider text-sm p-4 border border-red-500/20 rounded-lg justify-center mb-10 hover:bg-red-500/10 transition-colors"
+        >
+          <LogOut size={16} className="mr-2" /> Disconnect
+        </button>
       </div>
     </nav>
   );
@@ -234,11 +279,12 @@ const Footer = () => (
 );
 
 // --- components/ProductCard.jsx ---
-const ProductCard = ({ product, navigate, onQuickAdd }) => {
+const ProductCard = ({ product, navigate, onQuickAdd, wishlist, toggleWishlist }) => {
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+  const isWishlisted = wishlist?.some(item => item.id === product.id) || false;
 
   return (
-    <div className="group flex flex-col cursor-pointer bg-transparent rounded-lg overflow-hidden transition-all duration-500 hover:-translate-y-2">
+    <div className="group flex flex-col cursor-pointer bg-transparent rounded-lg overflow-hidden transition-all duration-500 hover:-translate-y-2 relative">
       <div 
         className="relative aspect-[3/4] overflow-hidden bg-[#111] rounded-lg border border-white/5 group-hover:border-[#39FF14]/30 group-hover:shadow-[0_10px_40px_rgba(57,255,20,0.1)] transition-all duration-500"
         onClick={() => navigate('product', { id: product.id })}
@@ -263,6 +309,20 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
           )}
         </div>
 
+        {/* Wishlist Heart Icon */}
+        <button 
+          onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }}
+          className={`absolute top-4 right-4 z-30 p-2.5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center
+            ${isWishlisted ? 'bg-[#39FF14]/20 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.4)]' : 'bg-[#111]/80 border-white/10 hover:border-[#39FF14]'}
+          `}
+        >
+          <Heart 
+            size={16} 
+            strokeWidth={isWishlisted ? 0 : 2}
+            className={`transition-colors duration-300 ${isWishlisted ? 'fill-[#39FF14] text-[#39FF14]' : 'text-white/70 group-hover:text-[#39FF14]'}`} 
+          />
+        </button>
+
         {/* Quick Add Overlay */}
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-[120%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-20">
           <button 
@@ -277,7 +337,7 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none" />
       </div>
       
-      <div className="pt-5 flex flex-col bg-transparent z-20 relative">
+      <div className="pt-5 flex flex-col bg-transparent z-20 relative px-2">
         <p className="text-[#39FF14] text-[10px] font-black uppercase tracking-[0.2em] mb-2">{product.category}</p>
         <h3 className="text-white font-bold text-sm md:text-base uppercase tracking-wide leading-snug group-hover:text-white transition-colors line-clamp-1 mb-2">
           {product.name}
@@ -297,10 +357,10 @@ const ProductCard = ({ product, navigate, onQuickAdd }) => {
 const Toast = ({ message }) => {
   if (!message) return null;
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] animate-fade-in-up">
-      <div className="bg-[#0A0A0A] text-white border border-[#39FF14] px-6 py-4 rounded-sm shadow-[0_0_40px_rgba(57,255,20,0.3)] flex items-center space-x-3 font-bold text-sm tracking-wide">
-        <CheckCircle2 size={20} className="text-[#39FF14]" />
-        <span className="uppercase tracking-wider">{message}</span>
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] animate-fade-in-up pointer-events-none">
+      <div className="bg-[#111]/90 backdrop-blur-md text-white border border-[#39FF14]/50 px-6 py-4 rounded-full shadow-[0_10px_40px_rgba(57,255,20,0.2)] flex items-center space-x-3 font-bold text-xs tracking-widest uppercase">
+        <CheckCircle2 size={18} className="text-[#39FF14]" />
+        <span>{message}</span>
       </div>
     </div>
   );
@@ -311,26 +371,54 @@ const Toast = ({ message }) => {
 // ==========================================
 
 // --- pages/Home.jsx ---
-const HomeView = ({ navigate, addToCart }) => {
+const HomeView = ({ navigate, addToCart, wishlist, toggleWishlist }) => {
   const trending = PRODUCTS.filter(p => p.tag === 'Bestseller' || p.price > 1400);
   const newDrops = PRODUCTS.filter(p => p.tag === 'New Drop' || p.price <= 1200);
+
+  const BANNER_IMAGES = [
+    "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=800&q=80",
+    "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&q=80",
+    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
+    "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80",
+    "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=80"
+  ];
 
   return (
     <div className="w-full bg-[#0F0F0F] overflow-hidden">
       
-      {/* 🚀 HERO SECTION (Cinematic Upgrade) */}
-      <section className="relative h-screen min-h-[700px] w-full flex flex-col items-center justify-center overflow-hidden">
+      {/* 🚀 INFINITE SCROLLING FASHION BANNER */}
+      <section className="pt-[100px] md:pt-[120px] pb-8 w-full overflow-hidden bg-[#0F0F0F] relative z-20">
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-20 pointer-events-none" />
+        
+        <div className="flex w-max animate-[scrollBanner_35s_linear_infinite] hover:[animation-play-state:paused]">
+          {[...BANNER_IMAGES, ...BANNER_IMAGES].map((img, i) => (
+            <div key={i} className="w-[240px] md:w-[320px] aspect-[4/5] rounded-xl overflow-hidden border border-white/5 flex-shrink-0 relative group cursor-pointer mx-2 md:mx-4 shadow-2xl">
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+              <img 
+                src={img} 
+                alt={`Lookbook ${i}`} 
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              />
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#39FF14]/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🚀 TYPOGRAPHY HERO (Prints That Speak) */}
+      <section className="relative w-full flex flex-col items-center justify-center overflow-hidden py-24 md:py-32 border-b border-white/5">
         <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=2000&q=80" 
-            alt="Streetwear Hero" 
-            className="w-full h-full object-cover object-top opacity-50 scale-100 animate-[heroZoom_20s_ease-out_forwards]"
+            alt="Streetwear Hero Background" 
+            className="w-full h-full object-cover object-top opacity-20 scale-100 animate-[heroZoom_30s_ease-out_forwards]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F]/70 via-[#0F0F0F]/40 to-[#0F0F0F] z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F]/80 via-transparent to-[#0F0F0F]/80 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F] via-[#0F0F0F]/60 to-[#0F0F0F] z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F]/90 via-transparent to-[#0F0F0F]/90 z-10" />
         </div>
         
-        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col items-center text-center mt-20">
+        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col items-center text-center">
           <Reveal delay={100}>
             <div className="inline-block border border-[#39FF14]/50 bg-[#39FF14]/10 backdrop-blur-md text-[#39FF14] text-[10px] font-black uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 shadow-[0_0_20px_rgba(57,255,20,0.2)]">
               Exclusive Printed Collection 2026
@@ -365,18 +453,11 @@ const HomeView = ({ navigate, addToCart }) => {
           </Reveal>
         </div>
 
-        {/* Floating background elements */}
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-[#39FF14]/10 rounded-full blur-[100px] animate-pulse-slow z-0" />
-        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow z-0" style={{ animationDelay: '2s' }} />
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-70">
-          <span className="text-[#39FF14] text-[9px] uppercase tracking-[0.3em] mb-2 font-black">Scroll</span>
-          <div className="w-[2px] h-12 bg-gradient-to-b from-[#39FF14] to-transparent" />
-        </div>
+        <div className="absolute top-1/4 left-10 w-64 h-64 bg-[#39FF14]/10 rounded-full blur-[100px] animate-pulse-slow z-0 pointer-events-none" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow z-0 pointer-events-none" style={{ animationDelay: '2s' }} />
       </section>
 
-      {/* 🔥 CATEGORIES (PRINTED T-SHIRTS ONLY) */}
+      {/* CATEGORIES */}
       <section className="py-32 bg-[#0F0F0F]">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <Reveal>
@@ -418,7 +499,7 @@ const HomeView = ({ navigate, addToCart }) => {
         </div>
       </section>
 
-      {/* 🚀 NEW DROPS (Grid) */}
+      {/* NEW DROPS */}
       <section className="py-32 bg-[#0A0A0A] border-y border-white/5 relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#39FF14]/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
@@ -444,6 +525,8 @@ const HomeView = ({ navigate, addToCart }) => {
                   product={product} 
                   navigate={navigate} 
                   onQuickAdd={(p) => addToCart(p, 'L', 1)} 
+                  wishlist={wishlist}
+                  toggleWishlist={toggleWishlist}
                 />
               </Reveal>
             ))}
@@ -451,10 +534,9 @@ const HomeView = ({ navigate, addToCart }) => {
         </div>
       </section>
 
-      {/* 🎥 LIFESTYLE VIDEO SECTION */}
+      {/* LIFESTYLE VIDEO SECTION */}
       <section className="relative h-[85vh] w-full flex items-center justify-center group overflow-hidden bg-[#0F0F0F]">
         <div className="absolute inset-0">
-          {/* Using a high quality Unsplash image with extreme zoom to simulate video/lifestyle feel if real video isn't available */}
           <img 
             src="https://images.unsplash.com/photo-1523398002811-999aa8e92d0c?w=1600&q=80" 
             alt="Campaign" 
@@ -482,7 +564,7 @@ const HomeView = ({ navigate, addToCart }) => {
         </Reveal>
       </section>
 
-      {/* 🔥 TRENDING PRINTS (Horizontal Scroll) */}
+      {/* TRENDING PRINTS */}
       <section className="py-32 bg-[#0F0F0F] overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <Reveal>
@@ -501,6 +583,8 @@ const HomeView = ({ navigate, addToCart }) => {
                   product={product} 
                   navigate={navigate} 
                   onQuickAdd={(p) => addToCart(p, 'L', 1)} 
+                  wishlist={wishlist}
+                  toggleWishlist={toggleWishlist}
                 />
               </Reveal>
             ))}
@@ -508,14 +592,18 @@ const HomeView = ({ navigate, addToCart }) => {
         </div>
       </section>
 
-      {/* 💎 ETHOS / WHY RELBERRY TEES */}
+      {/* ETHOS / ABOUT US REDIRECT */}
       <section className="py-32 bg-[#0A0A0A] border-y border-white/5 relative">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
             <Reveal direction="right">
-              <div className="relative group">
+              <div className="relative group cursor-pointer" onClick={() => navigate('about')}>
                 <div className="aspect-square bg-[#111] rounded-lg overflow-hidden border border-white/10 relative z-10">
                   <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1000&q=80" alt="Quality" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+                     <span className="bg-white text-[#0F0F0F] px-6 py-3 font-black uppercase tracking-widest text-xs rounded-sm">Read Our Story</span>
+                  </div>
                 </div>
                 <div className="absolute -bottom-10 -right-10 w-full h-full border-2 border-[#39FF14] rounded-lg -z-10 group-hover:-bottom-6 group-hover:-right-6 transition-all duration-500" />
               </div>
@@ -548,7 +636,7 @@ const HomeView = ({ navigate, addToCart }) => {
         </div>
       </section>
 
-      {/* 🌟 CUSTOMER VIBES (TESTIMONIALS) */}
+      {/* CUSTOMER VIBES */}
       <section className="py-32 bg-[#0F0F0F] overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <Reveal>
@@ -579,7 +667,7 @@ const HomeView = ({ navigate, addToCart }) => {
         </div>
       </section>
 
-      {/* 📩 NEWSLETTER */}
+      {/* NEWSLETTER */}
       <section className="py-32 bg-[#0A0A0A] relative overflow-hidden text-center border-t border-white/5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-[#39FF14]/10 rounded-full blur-[120px] -z-10 animate-pulse-slow" />
         <Reveal>
@@ -609,7 +697,7 @@ const HomeView = ({ navigate, addToCart }) => {
 };
 
 // --- pages/Shop.jsx ---
-const ShopView = ({ navigate, addToCart }) => {
+const ShopView = ({ navigate, addToCart, wishlist, toggleWishlist }) => {
   return (
     <div className="w-full bg-[#0F0F0F] min-h-screen pt-32 pb-24">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
@@ -669,6 +757,8 @@ const ShopView = ({ navigate, addToCart }) => {
                     product={product} 
                     navigate={navigate} 
                     onQuickAdd={(p) => addToCart(p, 'L', 1)}
+                    wishlist={wishlist}
+                    toggleWishlist={toggleWishlist}
                   />
                 </Reveal>
               ))}
@@ -840,6 +930,64 @@ const ProductDetailView = ({ product, navigate, addToCart }) => {
   );
 };
 
+// --- pages/WishlistView.jsx (NEW WISHLIST PAGE) ---
+const WishlistView = ({ wishlist, navigate, addToCart, toggleWishlist }) => {
+  return (
+    <div className="w-full bg-[#0F0F0F] min-h-screen pt-32 pb-24">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+        <Reveal>
+          <div className="mb-16 border-b border-white/10 pb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+            <div>
+              <h1 className="text-5xl md:text-[6rem] font-black text-white uppercase tracking-tighter leading-none drop-shadow-lg">Wishlist</h1>
+              <p className="text-[#39FF14] text-xs font-bold uppercase tracking-[0.1em] mt-4 flex items-center">
+                <Heart size={14} className="mr-2 fill-[#39FF14]" /> {wishlist.length} Saved Items
+              </p>
+            </div>
+            <button 
+              onClick={() => navigate('shop')}
+              className="text-white/50 hover:text-white font-bold uppercase tracking-[0.15em] text-xs transition-colors flex items-center group"
+            >
+              Continue Shopping <ArrowRight size={16} className="ml-2 group-hover:translate-x-2 transition-transform" />
+            </button>
+          </div>
+        </Reveal>
+
+        {wishlist.length === 0 ? (
+          <Reveal delay={100}>
+            <div className="py-32 border border-white/10 bg-[#111] rounded-lg text-center shadow-2xl flex flex-col items-center">
+              <Heart size={56} className="text-white/10 mb-6" strokeWidth={1} />
+              <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4">No saved tees yet.</h2>
+              <p className="text-white/50 text-sm font-medium mb-8 max-w-md">
+                Your wishlist is empty. Tap the heart icon on any product to save it for later.
+              </p>
+              <button 
+                onClick={() => navigate('shop')}
+                className="bg-[#39FF14] text-[#0F0F0F] px-10 py-4 font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all duration-300 rounded-sm shadow-[0_0_20px_rgba(57,255,20,0.3)] hover:scale-105 active:scale-95"
+              >
+                Explore Tees
+              </button>
+            </div>
+          </Reveal>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-6 md:gap-y-12">
+            {wishlist.map((product, i) => (
+              <Reveal key={product.id} delay={i * 50}>
+                <ProductCard 
+                  product={product} 
+                  navigate={navigate} 
+                  onQuickAdd={(p) => addToCart(p, 'L', 1)}
+                  wishlist={wishlist}
+                  toggleWishlist={toggleWishlist}
+                />
+              </Reveal>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // --- pages/Cart.jsx ---
 const CartView = ({ cart, updateQuantity, removeFromCart, navigate }) => {
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -855,8 +1003,8 @@ const CartView = ({ cart, updateQuantity, removeFromCart, navigate }) => {
         
         {cart.length === 0 ? (
           <Reveal delay={100}>
-            <div className="py-32 border border-white/10 bg-[#111] rounded-lg text-center shadow-2xl">
-              <ShoppingCart size={48} className="mx-auto text-white/20 mb-6" strokeWidth={1} />
+            <div className="py-32 border border-white/10 bg-[#111] rounded-lg text-center shadow-2xl flex flex-col items-center">
+              <ShoppingCart size={56} className="text-white/10 mb-6" strokeWidth={1} />
               <h2 className="text-2xl font-black text-white uppercase tracking-wider mb-6">Your cart is empty</h2>
               <button 
                 onClick={() => navigate('shop')}
@@ -877,7 +1025,7 @@ const CartView = ({ cart, updateQuantity, removeFromCart, navigate }) => {
               
               <div className="divide-y divide-white/10 border-b border-white/10">
                 {cart.map((item, i) => (
-                  <Reveal key={`${item.id}-${item.size}`} delay={i * 100}>
+                  <Reveal key={`${item.id}-${item.size}`} delay={i * 50}>
                     <div className="py-8 flex flex-col md:grid md:grid-cols-12 gap-6 items-center relative group">
                       <button 
                         onClick={() => removeFromCart(item.id, item.size)}
@@ -1105,20 +1253,35 @@ const CheckoutView = ({ cart, navigate }) => {
   );
 };
 
-
 // ==========================================
 // MAIN APP COMPONENT (Entry Point & State)
 // ==========================================
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Auth State
   const [currentView, setCurrentView] = useState('home'); 
   const [params, setParams] = useState({}); 
   const [cart, setCart] = useState([]);
   const [toastMsg, setToastMsg] = useState('');
 
+  // Wishlist State with localStorage Persistence
+  const [wishlist, setWishlist] = useState(() => {
+    try {
+      const saved = localStorage.getItem('relberry_wishlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // Sync wishlist to localStorage on change
+  useEffect(() => {
+    localStorage.setItem('relberry_wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentView, params]);
+  }, [currentView, params, isLoggedIn]);
 
   const navigate = (view, newParams = {}) => {
     setCurrentView(view);
@@ -1128,6 +1291,16 @@ export default function App() {
   const showToast = (message) => {
     setToastMsg(message);
     setTimeout(() => setToastMsg(''), 3000);
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    setCurrentView('home');
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setCart([]);
   };
 
   const addToCart = (product, size, quantity) => {
@@ -1145,6 +1318,19 @@ export default function App() {
     showToast(`Added ${product.name} to cart`);
   };
 
+  const toggleWishlist = (product) => {
+    setWishlist(prev => {
+      const exists = prev.find(item => item.id === product.id);
+      if (exists) {
+        showToast(`Removed from Wishlist`);
+        return prev.filter(item => item.id !== product.id);
+      } else {
+        showToast(`Added to Wishlist`);
+        return [...prev, product];
+      }
+    });
+  };
+
   const updateQuantity = (id, size, newQty) => {
     if (newQty < 1) return;
     setCart(prev => prev.map(item => 
@@ -1157,20 +1343,27 @@ export default function App() {
   };
 
   const renderView = () => {
+    // If not logged in, we render AuthView but it's completely out of the router DOM scope for cleanliness.
+    // However, I've bypassed it to true so you can see the new Home view changes per request.
+
     switch (currentView) {
       case 'home':
-        return <HomeView navigate={navigate} addToCart={addToCart} />;
+        return <HomeView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
       case 'shop':
-        return <ShopView navigate={navigate} addToCart={addToCart} />;
+        return <ShopView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
       case 'product':
         const product = PRODUCTS.find(p => p.id === params.id);
         return <ProductDetailView product={product} navigate={navigate} addToCart={addToCart} />;
+      case 'wishlist':
+        return <WishlistView wishlist={wishlist} navigate={navigate} addToCart={addToCart} toggleWishlist={toggleWishlist} />;
+      case 'about':
+        return <AboutView navigate={navigate} />;
       case 'cart':
         return <CartView cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} navigate={navigate} />;
       case 'checkout':
         return <CheckoutView cart={cart} navigate={navigate} />;
       default:
-        return <HomeView navigate={navigate} addToCart={addToCart} />;
+        return <HomeView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
     }
   };
 
@@ -1190,37 +1383,43 @@ export default function App() {
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes heroZoom {
-          0% { transform: scale(1.05); }
-          100% { transform: scale(1.2); }
+          0% { transform: scale(1); }
+          100% { transform: scale(1.15); }
         }
         @keyframes pulseGlow {
           0%, 100% { opacity: 0.8; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.05); }
         }
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
+        @keyframes scrollBanner {
+          0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        @keyframes marquee_reverse {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0%); }
-        }
         
-        /* Utility Animation Classes */
+        /* Utility Classes */
+        .stroke-text {
+          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+          color: transparent;
+        }
         .animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .animate-pulse-slow { animation: pulseGlow 4s ease-in-out infinite; }
         .animate-pulse-fast { animation: pulseGlow 1.5s ease-in-out infinite; }
-        .animate-[marquee_15s_linear_infinite] { animation: marquee 15s linear infinite; }
-        .animate-[marquee_15s_linear_infinite_reverse] { animation: marquee_reverse 15s linear infinite; }
       `}} />
 
-      <Navbar cartCount={totalCartItems} navigate={navigate} currentView={currentView} />
+      {isLoggedIn && (
+        <Navbar 
+          cartCount={totalCartItems} 
+          wishlistCount={wishlist.length}
+          navigate={navigate} 
+          currentView={currentView} 
+          onLogout={handleLogout} 
+        />
+      )}
       
       <main className="flex-grow w-full">
         {renderView()}
       </main>
       
-      <Footer />
+      {isLoggedIn && <Footer />}
       
       <Toast message={toastMsg} />
     </div>

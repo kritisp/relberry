@@ -39,6 +39,11 @@ export default function App() {
   }, [currentView, params, isAuthenticated]);
 
   const navigate = (view, newParams = {}) => {
+    if (view === 'checkout' && !isAuthenticated) {
+      setCurrentView('auth');
+      setParams({ returnView: 'checkout', returnParams: newParams });
+      return;
+    }
     setCurrentView(view);
     setParams(newParams);
   };
@@ -109,16 +114,17 @@ export default function App() {
         return <CartView cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} navigate={navigate} />;
       case 'checkout':
         return <CheckoutView cart={cart} navigate={navigate} />;
+      case 'auth':
+        return <AuthView onLogin={() => {
+           setIsAuthenticated(true);
+           navigate(params.returnView || 'home', params.returnParams || {});
+        }} />;
       default:
         return <HomeView navigate={navigate} addToCart={addToCart} wishlist={wishlist} toggleWishlist={toggleWishlist} />;
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <AuthView onLogin={() => setIsAuthenticated(true)} />
-    );
-  }
+
 
   const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -162,19 +168,22 @@ export default function App() {
         }
       `}} />
 
-      <Navbar 
-        cartCount={totalCartItems} 
-        wishlistCount={wishlist.length} 
-        navigate={navigate} 
-        currentView={currentView} 
-        onLogout={handleLogout} 
-      />
+      {currentView !== 'auth' && (
+        <Navbar 
+          cartCount={totalCartItems} 
+          wishlistCount={wishlist.length} 
+          navigate={navigate} 
+          currentView={currentView} 
+          onLogout={handleLogout} 
+          isAuthenticated={isAuthenticated}
+        />
+      )}
 
-      <main className="flex-grow w-full">
+      <main className={`flex-grow w-full ${currentView === 'auth' ? 'min-h-screen flex flex-col' : ''}`}>
         {renderView()}
       </main>
 
-      <Footer />
+      {currentView !== 'auth' && <Footer />}
 
       <Toast message={toastMsg} />
     </div>

@@ -1,17 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, Menu, X, Search, User, Heart, LogOut } from 'lucide-react';
 
-const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) => {
+const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout, isAuthenticated }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScroll = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      setScrolled(currentScroll > 30);
+      
+      if (currentScroll > lastScroll.current && currentScroll > 80) {
+        setHidden(true);
+      } else if (currentScroll < lastScroll.current) {
+        setHidden(false);
+      }
+      lastScroll.current = currentScroll;
+    };
+
+    if (isMobileMenuOpen) {
+      setHidden(false);
+      return;
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: 'Graphic Prints', view: 'shop' },
@@ -21,7 +39,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
   ];
 
   return (
-    <nav className={`fixed top-0 z-50 w-full transition-all duration-500 ${scrolled ? 'bg-[#0F0F0F]/80 backdrop-blur-xl border-b border-white/5 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-gradient-to-b from-[#0F0F0F]/80 to-transparent py-6'}`}>
+    <nav className={`fixed top-0 z-50 w-full transition-transform duration-500 ease-in-out ${hidden ? '-translate-y-full' : 'translate-y-0'} transition-all ${scrolled ? 'bg-[#0F0F0F]/80 backdrop-blur-xl border-b border-white/5 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-gradient-to-b from-[#0F0F0F]/80 to-transparent py-3'}`}>
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center relative">
           {/* Mobile Menu Button */}
@@ -39,7 +57,7 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
             className="absolute left-1/2 -translate-x-1/2 lg:static lg:-translate-x-0 flex-shrink-0 lg:w-1/4 flex justify-center lg:justify-start cursor-pointer group hover:opacity-90"
             onClick={() => navigate('home')}
           >
-            <img src="/logo.png" alt="Relberry Logo" className="h-20 md:h-28 lg:h-36 object-contain group-hover:scale-105 transition-all duration-500" style={{ filter: 'drop-shadow(0 0 20px rgba(255,214,78,0.6))' }} />
+            <img src="/logo.png" alt="Relberry Logo" className="h-20 md:h-28 lg:h-36 lg:-my-8 object-contain group-hover:scale-105 transition-all duration-500" style={{ filter: 'drop-shadow(0 0 20px rgba(255,214,78,0.6))' }} />
           </div>
 
           {/* Desktop Nav */}
@@ -89,19 +107,30 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
               
               {profileOpen && (
                 <div className="absolute right-0 mt-4 w-48 bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.8)] py-2 animate-fade-in-up origin-top-right">
-                  <div className="px-4 py-3 border-b border-white/5 mb-2">
-                    <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Signed in as</p>
-                    <p className="text-white text-xs font-bold truncate mt-1">hypebeast@relberry.com</p>
-                  </div>
-                  <button className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/70 hover:text-white hover:bg-white/5 transition-colors">
-                    My Orders
-                  </button>
-                  <button 
-                    onClick={() => { setProfileOpen(false); onLogout(); }}
-                    className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors flex items-center"
-                  >
-                    <LogOut size={14} className="mr-2" /> Logout
-                  </button>
+                  {isAuthenticated ? (
+                    <>
+                      <div className="px-4 py-3 border-b border-white/5 mb-2">
+                        <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Signed in as</p>
+                        <p className="text-white text-xs font-bold truncate mt-1">hypebeast@relberry.com</p>
+                      </div>
+                      <button className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                        My Orders
+                      </button>
+                      <button 
+                        onClick={() => { setProfileOpen(false); onLogout(); }}
+                        className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors flex items-center"
+                      >
+                        <LogOut size={14} className="mr-2" /> Logout
+                      </button>
+                    </>
+                  ) : (
+                    <button 
+                      onClick={() => { setProfileOpen(false); navigate('auth'); }}
+                      className="w-full text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#d4af37] hover:text-white hover:bg-white/5 transition-colors"
+                    >
+                      Sign In / Register
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -148,13 +177,23 @@ const Navbar = ({ cartCount, wishlistCount, navigate, currentView, onLogout }) =
           ))}
         </div>
         
-        <button 
-          onClick={() => { setIsMobileMenuOpen(false); onLogout(); }}
-          className={`flex items-center text-red-400 font-bold uppercase tracking-wider text-sm p-4 border border-red-500/20 rounded-lg justify-center mb-10 hover:bg-red-500/10 transition-colors duration-500 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
-          style={{ transitionDelay: `500ms` }}
-        >
-          <LogOut size={16} className="mr-2" /> Disconnect
-        </button>
+        {isAuthenticated ? (
+          <button 
+            onClick={() => { setIsMobileMenuOpen(false); onLogout(); }}
+            className={`flex items-center text-red-400 font-bold uppercase tracking-wider text-sm p-4 border border-red-500/20 rounded-lg justify-center mb-10 hover:bg-red-500/10 transition-colors duration-500 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
+            style={{ transitionDelay: `500ms` }}
+          >
+            <LogOut size={16} className="mr-2" /> Disconnect
+          </button>
+        ) : (
+          <button 
+            onClick={() => { setIsMobileMenuOpen(false); navigate('auth'); }}
+            className={`flex items-center text-[#d4af37] font-bold uppercase tracking-wider text-sm p-4 border border-[#d4af37]/40 rounded-lg justify-center mb-10 hover:bg-[#d4af37]/10 transition-colors duration-500 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
+            style={{ transitionDelay: `500ms` }}
+          >
+            <User size={16} className="mr-2" /> Sign In / Register
+          </button>
+        )}
       </div>
     </nav>
   );
